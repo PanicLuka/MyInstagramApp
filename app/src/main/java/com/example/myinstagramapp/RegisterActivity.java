@@ -3,6 +3,7 @@ package com.example.myinstagramapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -35,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference mRootRef;
     private FirebaseAuth mAuth;
 
+    ProgressDialog pd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+        pd = new ProgressDialog(this);
 
         loginUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +88,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(final String username, final String name, final String email, final String password) {
+        pd.setMessage("Please wait!");
+        pd.show();
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
@@ -94,12 +100,16 @@ public class RegisterActivity extends AppCompatActivity {
                 map.put("email", email);
                 map.put("username", username);
                 map.put("id", mAuth.getCurrentUser().getUid());
+                map.put("bio", "");
+                map.put("imageurl", "default");
+
 
                 mRootRef.child("Users").child(mAuth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull  Task<Void> task) {
                         if (task.isSuccessful())
                         {
+                            pd.dismiss();
                             Toast.makeText(RegisterActivity.this,
                                     "Update the profile for better experience", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
@@ -109,6 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                         } else {
+                            pd.dismiss();
                             task.getException();
                         }
                     }
