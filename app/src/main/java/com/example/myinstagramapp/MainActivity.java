@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
                         selectorFragment = null;
                         startActivity(new Intent(MainActivity.this, PostActivity.class));
                         break;
-                    case R.id.nav_heart:
-                        selectorFragment = new NotificationFragment();
-                        break;
+//                    case R.id.nav_heart:
+//                        selectorFragment = new NotificationFragment();
+//                        break;
                     case R.id.nav_profile:
                         selectorFragment = new ProfileFragment();
                         break;

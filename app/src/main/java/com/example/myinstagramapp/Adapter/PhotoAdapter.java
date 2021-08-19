@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myinstagramapp.Model.Post;
@@ -36,6 +37,19 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
 
         Post post = mPosts.get(position);
         Picasso.get().load(post.getImageUrl()).placeholder(R.mipmap.ic_launcher).into(holder.postImage);
+
+//        holder.postImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit().putString("postid", post.getPostId()).apply();
+//
+//                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.fragment_container, new PostDetailFragment()).commit();
+//
+//
+//
+//            }
+//        });
 
     }
 
