@@ -88,6 +88,6 @@ public class StartActivity extends AppCompatActivity {
             startActivity(new Intent(StartActivity.this, MainActivity.class));
             finish();
         }
-    }
+   }
 
 }
